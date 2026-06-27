@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3-Tier App</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    input, button { padding: 8px 12px; margin: 4px; font-size: 14px; }
+    button { background: #333; color: #fff; border: none; cursor: pointer; border-radius: 4px; }
+    #output { margin-top: 20px; background: #f4f4f4; padding: 12px; border-radius: 4px; min-height: 40px; }
+  </style>
+</head>
+<body>
+  <h2>3-Tier DevOps App</h2>
+  <div>
+    <input id="name" placeholder="Enter name" />
+    <button onclick="addUser()">Add User</button>
+    <button onclick="getUsers()">Get All Users</button>
+  </div>
+  <div id="output">Output will appear here...</div>
+  <script>
+    const API = "/api";
+
+    async function addUser() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) return;
+      const res = await fetch(`${API}/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+      const data = await res.json();
+      document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function getUsers() {
+      const res = await fetch(`${API}/users`);
+      const data = await res.json();
+      document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
