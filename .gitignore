@@ -1,3 +1,4 @@
+*.pem
 .env
 terraform.tfvars
 __pycache__/
